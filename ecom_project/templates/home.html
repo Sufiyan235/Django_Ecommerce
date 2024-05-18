@@ -295,6 +295,7 @@
                     }
                   }'>
                   <div class="swiper-wrapper">
+
                     {% for category in categories %}
                       <div class="swiper-slide align-self-stretch bg-transparent h-auto">
                         <div class="me-xl-n4 me-xxl-n5" data-aos="fade-up" data-aos-delay="000">
@@ -303,7 +304,7 @@
                             </picture>
                             <p class="title-small mb-2 text-muted">{{category.category_desc}}</p>
                             <h4 class="lead fw-bold">{{category.category_name}}</h4>
-                            <a href="#" class="btn btn-psuedo align-self-start">Shop Now</a>
+                            <a href="{% url "store" category.category_slug %}" class="btn btn-psuedo align-self-start">Shop Now</a>
                         </div>
                       </div>
                     {% endfor %}
