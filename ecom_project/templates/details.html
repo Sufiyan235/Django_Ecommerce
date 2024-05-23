@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{{products.product_image.url}}
+{% for i in prod_images %}
+    {{i.image.url}}
+{% endfor %}
+{% endblock %}
