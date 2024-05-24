@@ -25,7 +25,7 @@ class Brand(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
-    price = models.IntegerField()
+    price = models.FloatField()
     product_image = models.ImageField(upload_to="Product_Images")
     product_slug = models.SlugField(max_length=50)
     # description=models.TextField(max_length=300,blank=True)

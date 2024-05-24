@@ -18,11 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_name', 'price', 'stock', 'is_available', 'category', 'brand', 'created_date', 'modified_date')
     prepopulated_fields = {'product_slug': ('product_name',)}
 admin.site.register(Product, ProductAdmin)
-# class ProductAdmin(admin.ModelAdmin):
-#     prepopulated_fields={'product_slug':('product_name',)}
-#     list_display = ['product_name','category']
 
-# admin.site.register(Product,ProductAdmin)
 
 
 class BrandAdmin(admin.ModelAdmin):

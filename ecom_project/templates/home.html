@@ -126,7 +126,7 @@
                     <div class="marquee-section animation-marquee-50">
                       {% for brand in brands %}
                       <div class="mx-3 mx-lg-5 f-w-24">
-                          <a class="d-block" href="#">
+                          <a class="d-block" href="{% url "brand_store" brand.brand_slug %}">
                               <picture>
                                   <img class="img-fluid d-table mx-auto" src="{{brand.brand_image.url}}" alt="{{brand.brand_name}}">
                               </picture>

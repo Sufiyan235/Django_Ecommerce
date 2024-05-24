@@ -1,10 +1,12 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white flex-column border-0  ">
     <div class="container-fluid">
         <div class="w-100">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
 
                 <!-- Logo-->
-                <a class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0 order-0" href="./index.html">
+                <a class="navbar-brand fw-bold fs-3 m-0 p-0 flex-shrink-0 order-0" href="{% url "home" %}">
                     <div class="d-flex align-items-center">
                         <svg class="f-w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77.53 72.26"><path d="M10.43,54.2h0L0,36.13,10.43,18.06,20.86,0H41.72L10.43,54.2Zm67.1-7.83L73,54.2,68.49,62,45,48.47,31.29,72.26H20.86l-5.22-9L52.15,0H62.58l5.21,9L54.06,32.82,77.53,46.37Z" fill="currentColor" fill-rule="evenodd"/></svg>
                     </div>
@@ -74,7 +76,7 @@
                                 <div class="row mx-0 py-4 g-0 border-bottom">
                                     <div class="col-2 position-relative">
                                         <picture class="d-block ">
-                                            <img class="img-fluid" src="./assets/images/products/product-cart-1.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                            <img class="img-fluid" src="{% static 'images/products/product-cart-1.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                         </picture>
                                     </div>
                                     <div class="col-9 offset-1">
@@ -92,7 +94,7 @@
                                 <div class="row mx-0 py-4 g-0 border-bottom">
                                     <div class="col-2 position-relative">
                                         <picture class="d-block ">
-                                            <img class="img-fluid" src="./assets/images/products/product-cart-2.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                            <img class="img-fluid" src="{% static 'images/products/product-cart-2.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                         </picture>
                                     </div>
                                     <div class="col-9 offset-1">
@@ -230,21 +232,21 @@
                                               <div class="me-5 f-w-20">
                                                   <a class="d-block" href="./category.html">
                                                       <picture>
-                                                          <img class="img-fluid d-table mx-auto" src="./assets/images/logos/logo-2.svg" alt="">
+                                                          <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-2.svg' %}" alt="">
                                                       </picture>
                                                   </a>
                                               </div>
                                               <div class="me-5 f-w-20">
                                                   <a class="d-block" href="./category.html">
                                                       <picture>
-                                                          <img class="img-fluid d-table mx-auto" src="./assets/images/logos/logo-3.svg" alt="">
+                                                          <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-3.svg' %}" alt="">
                                                       </picture>
                                                   </a>
                                               </div>
                                               <div class="me-5 f-w-20">
                                                   <a class="d-block" href="./category.html">
                                                       <picture>
-                                                          <img class="img-fluid d-table mx-auto" src="./assets/images/logos/logo-4.svg" alt="">
+                                                          <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-4.svg' %}" alt="">
                                                       </picture>
                                                   </a>
                                               </div>
@@ -273,7 +275,7 @@
                                                   <div class="col-12 col-md-6">
                                                       <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                           <picture class="w-100 d-block mb-2 mx-auto">
-                                                              <img class="w-100 rounded" title="" src="./assets/images/banners/banner-12.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                              <img class="w-100 rounded" title="" src="{% static 'images/banners/banner-12.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                                           </picture>
                                                           <a class="fw-bolder link-cover" href="./category.html">Latest Arrivals</a>
                                                       </div>
@@ -281,7 +283,7 @@
                                                   <div class="col-12 col-md-6">
                                                       <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                           <picture class="w-100 d-block mb-2 mx-auto">
-                                                              <img class="w-100 rounded" title="" src="./assets/images/banners/banner-13.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                              <img class="w-100 rounded" title="" src="{% static 'images/banners/banner-13.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                                           </picture>
                                                           <a class="fw-bolder link-cover" href="./category.html">Accessories</a>
                                                       </div>
@@ -289,7 +291,7 @@
                                                   <div class="col-12 col-md-6">
                                                       <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                           <picture class="w-100 d-block mb-2 mx-auto">
-                                                              <img class="w-100 rounded" title="" src="./assets/images/banners/banner-14.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                              <img class="w-100 rounded" title="" src="{% static 'images/banners/banner-14.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                                           </picture>
                                                           <a class="fw-bolder link-cover" href="./category.html">T-Shirts</a>
                                                       </div>
@@ -297,7 +299,7 @@
                                                   <div class="col-12 col-md-6">
                                                       <div class="card justify-content-center d-flex align-items-center bg-transparent">
                                                           <picture class="w-100 d-block mb-2 mx-auto">
-                                                              <img class="w-100 rounded" title="" src="./assets/images/banners/banner-15.jpg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                              <img class="w-100 rounded" title="" src="{% static 'images/banners/banner-15.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                                           </picture>
                                                           <a class="fw-bolder link-cover" href="./category.html">Jackets</a>
                                                       </div>
