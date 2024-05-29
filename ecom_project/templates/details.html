@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+
+{% load static %}
 {% block title %} {{product.product_name}} Detail {% endblock %}
 {% block content %}
 
@@ -30,15 +32,11 @@
             <!-- Product Images-->
             <div class="col-12 col-md-6 col-xl-7">
                 <div class="row g-3" data-aos="fade-right">
-                    {% comment %} <div class="col-12">
-                        <picture>
-                            <img class="img-fluid" data-zoomable src="./assets/images/products/product-page-1.jpeg" alt="Hello">
-                        </picture>
-                    </div> {% endcomment %}
+                    
                     {% for image in product_images %}
-                    <div class="col-12">
+                    <div style="height: 55vh;width: 38rem;"  class="col-12">
                         <picture>
-                            <img class="img-fluid" data-zoomable src="{{image.image.url}}" alt="{{product.product_name}}">
+                            <img style="height: 100%; width: 100%; object-fit: contain;" class="img-fluid" data-zoomable src="{{image.image.url}}" alt="{{product.product_name}}">
                         </picture>
                     </div>
                     {% endfor %}
@@ -154,10 +152,10 @@
                             </small>
                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
                                 <picture class="me-2">
-                                    <img class="f-w-24 p-2 bg-light border-bottom border-dark border-2 cursor-pointer" src="./assets/images/products/product-page-thumb-1.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                    <img style="height: 6rem;object-fit: contain;" class="f-w-24 p-2 bg-light border-bottom border-dark border-2 cursor-pointer" src="{% static 'images/products/product-page-thumb-1.jpeg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                 </picture>
                                 <picture>
-                                    <img class="f-w-24 p-2 bg-light cursor-pointer" src="./assets/images/products/product-page-thumb-2.jpeg" alt="HTML Bootstrap Template by Pixel Rocket">
+                                    <img style="height: 6rem;object-fit: contain;" class="f-w-24 p-2 bg-light cursor-pointer" src="{% static 'images/products/product-page-thumb-2.jpeg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
                                 </picture>
                             </div>
                         </div>
