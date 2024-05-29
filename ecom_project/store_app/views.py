@@ -19,6 +19,7 @@ def store(request,category_slug):
     }
     return render(request,'category_store.html',context)
 
+
 def product_detail(request,id):
     product = Product.objects.get(id=id)
     product_images = ProductImage.objects.filter(product=product)

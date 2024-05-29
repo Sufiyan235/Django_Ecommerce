@@ -13,11 +13,17 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
 
+class ProductVariationInline(admin.TabularInline):
+    model = ProductVariation
+    extra = 1
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, ProductVariationInline]
     list_display = ('product_name', 'price', 'stock', 'is_available', 'category', 'brand', 'created_date', 'modified_date')
     prepopulated_fields = {'product_slug': ('product_name',)}
+
 admin.site.register(Product, ProductAdmin)
+
 
 
 
