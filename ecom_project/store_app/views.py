@@ -23,8 +23,6 @@ def category_store(request,category_slug):
     return render(request,'category_store.html',context)
 
 
-
-
 def store(request):
     products = Product.objects.all()
     listed=list(products)
@@ -38,8 +36,8 @@ def product_detail(request,id):
     product = Product.objects.get(id=id)
     product_images = ProductImage.objects.filter(product=product)
 
-    related_products = Product.objects.filter(brand=product.brand,category=product.category).exclude(product_name=product.product_name)
-    
+    related_products = Product.objects.filter(brand=product.brand,category=product.category).exclude(product_name=product.product_name).distinct()
+    print(related_products)
     context = {
         "product":product,
         "product_images":product_images,

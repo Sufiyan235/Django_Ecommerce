@@ -9,20 +9,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Category,CategoryAdmin)
 
-class ProductImageInline(admin.TabularInline):
-    model = ProductImage
-    extra = 1
 
-class ProductVariationInline(admin.TabularInline):
-    model = ProductVariation
-    extra = 1
 
-class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline, ProductVariationInline]
-    list_display = ('product_name', 'price', 'stock', 'is_available', 'category', 'brand', 'created_date', 'modified_date')
-    prepopulated_fields = {'product_slug': ('product_name',)}
-
-admin.site.register(Product, ProductAdmin)
 
 
 
@@ -33,3 +21,29 @@ class BrandAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Brand,BrandAdmin)
+
+
+
+# Inline for ProductOption
+class ProductOptionInline(admin.TabularInline):
+    model = ProductOption
+    extra = 1
+
+# Inline for ProductVariation, including ProductOptionInline
+class ProductVariationInline(admin.StackedInline):
+    model = ProductVariation
+    extra = 1
+    inlines = [ProductOptionInline]
+
+# Inline for ProductImage
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+
+# Admin class for Product with inlines for ProductImage and ProductVariation
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline, ProductVariationInline]
+    list_display = ('product_name', 'price', 'stock', 'is_available', 'category', 'brand', 'created_date', 'modified_date')
+    prepopulated_fields = {'product_slug': ('product_name',)}
+
+admin.site.register(Product, ProductAdmin)

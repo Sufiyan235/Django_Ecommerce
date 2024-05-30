@@ -49,10 +49,16 @@ class ProductImage(models.Model):
 
 class ProductVariation(models.Model):
     product = models.ForeignKey(Product, related_name='variations', on_delete=models.CASCADE)
-    variation_type = models.CharField(max_length=100)  # e.g., 'Size' or 'Color'
-    option_name = models.CharField(max_length=100)  # e.g., 'Small', 'Medium', 'Red', 'Blue'
-    variation_image = models.ImageField(upload_to="Product_Images",null=True,blank=True)
+    name = models.CharField(max_length=100,null=True,blank=True)  # e.g., 'Size' or 'Color'
+
+    def __str__(self):
+        return f"{self.product.product_name} - {self.name}"
+
+class ProductOption(models.Model):
+    variation = models.ForeignKey(ProductVariation, related_name='options', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)  # e.g., 'Small', 'Medium', 'Red', 'Blue'
+    image = models.ImageField(upload_to="Variation Images")
     additional_price = models.FloatField(default=0.0)  # Optional: additional cost for the option
 
     def __str__(self):
-        return f"{self.product.product_name} - {self.variation_type}: {self.option_name}"
+        return f"{self.variation.product.product_name} - {self.variation.name} - {self.name}"   
