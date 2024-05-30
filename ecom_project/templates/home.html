@@ -137,71 +137,7 @@
 
                         
                     </div>
-                    {% comment %} <div class="marquee-section animation-marquee-50">
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-1.svg' %}">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-2.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-3.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-4.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-5.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-6.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-7.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-8.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                        <div class="mx-5 f-w-24">
-                            <a class="d-block" href="./category.html">
-                                <picture>
-                                    <img class="img-fluid d-table mx-auto" src="{% static 'images/logos/logo-9.svg' %}" alt="">
-                                </picture>
-                            </a>
-                        </div>
-                    </div> {% endcomment %}
+                    
                 </div>
             </section>
         </div>
@@ -253,7 +189,7 @@
                             </picture>
                             <p class="title-small mb-2 text-muted">{{category.category_desc}}</p>
                             <h4 class="lead fw-bold">{{category.category_name}}</h4>
-                            <a href="{% url "store" category.category_slug %}" class="btn btn-psuedo align-self-start">Shop Now</a>
+                            <a href="{% url "category_store" category.category_slug %}" class="btn btn-psuedo align-self-start">Shop Now</a>
                         </div>
                       </div>
                     {% endfor %}

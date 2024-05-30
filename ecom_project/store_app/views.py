@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import *
+import random
 # Create your views here.
 def home(request):
     categories = Category.objects.all()
@@ -11,14 +12,27 @@ def home(request):
     return render(request,'home.html',context)
 
 
-def store(request,category_slug):
+def category_store(request,category_slug):
+
     category = Category.objects.get(category_slug=category_slug)
     products = Product.objects.filter(category=category, is_available=True)
+
     context = {
         "products":products,
     }
     return render(request,'category_store.html',context)
 
+
+
+
+def store(request):
+    products = Product.objects.all()
+    listed=list(products)
+    products=random.sample(listed,k=9)
+    context = {
+        "products":products,
+    }
+    return render(request,'store.html',context)
 
 def product_detail(request,id):
     product = Product.objects.get(id=id)
