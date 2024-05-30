@@ -45,13 +45,20 @@
 
                     </li>
                     <!-- /Navbar Search-->
-
+                    {% if request.user.is_authenticated %}
                     <!-- Navbar Login-->
+                        <li class="ms-1 d-none d-lg-inline-block">
+                            <a class="nav-link text-body" href="{% url "logout" %}">
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
                     <li class="ms-1 d-none d-lg-inline-block">
-                        <a class="nav-link text-body" href="./login.html">
-                            Account
+                        <a class="nav-link text-body" href="{% url "login" %}">
+                            Login
                         </a>
                     </li>
+                    {% endif %}
                     <!-- /Navbar Login-->
 
                     <!-- Navbar Cart Icon-->
