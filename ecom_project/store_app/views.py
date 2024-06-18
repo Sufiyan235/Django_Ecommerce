@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 import random
+from django.db.models import Q
 # Create your views here.
 def home(request):
     categories = Category.objects.all()
@@ -35,13 +36,17 @@ def store(request):
 def product_detail(request,id):
     product = Product.objects.get(id=id)
     product_images = ProductImage.objects.filter(product=product)
+    available_designs = AvailableDesign.objects.filter(available_products=product)
 
-    related_products = Product.objects.filter(brand=product.brand,category=product.category).exclude(product_name=product.product_name).distinct()
-    print(related_products)
+    related_products = Product.objects.filter(
+    Q(brand=product.brand) | Q(category=product.category)).exclude(product_name=product.product_name).distinct()
+
+    
     context = {
         "product":product,
         "product_images":product_images,
-        "related_products":related_products
+        "related_products":related_products,
+        "available_designs":available_designs
     }
     return render(request,'details.html',context)
 

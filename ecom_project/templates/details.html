@@ -151,12 +151,12 @@
                                 Available Designs :
                             </small>
                             <div class="mt-4 d-flex justify-content-start flex-wrap align-items-start">
+                                {% for available_design in available_designs %}
                                 <picture class="me-2">
-                                    <img style="height: 6rem;object-fit: contain;" class="f-w-24 p-2 bg-light border-bottom border-dark border-2 cursor-pointer" src="{% static 'images/products/product-page-thumb-1.jpeg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
+                                    <img style="height: 6rem;object-fit: contain;" class="f-w-24 p-2 bg-light border-bottom border-dark border-2 cursor-pointer" src="{{available_design.image.url}}" alt="HTML Bootstrap Template by Pixel Rocket">
                                 </picture>
-                                <picture>
-                                    <img style="height: 6rem;object-fit: contain;" class="f-w-24 p-2 bg-light cursor-pointer" src="{% static 'images/products/product-page-thumb-2.jpeg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
-                                </picture>
+                                {% endfor %}
+                                
                             </div>
                         </div>
                         <button class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</button>
@@ -258,7 +258,6 @@
                 <!-- Swiper Latest -->
                 <div class="swiper-container" data-swiper data-options='{
                     "spaceBetween": 10,
-                    "loop": true,
                     "autoplay": {
                       "delay": 5000,
                       "disableOnInteraction": false
@@ -319,7 +318,7 @@
                 
                 </div>
                 <!-- / Swiper Latest-->                </div>
-            <!-- / Related Products-->
+            </div><!-- / Related Products-->
 
             <!-- Reviews-->
             <div class="col-12" data-aos="fade-up">

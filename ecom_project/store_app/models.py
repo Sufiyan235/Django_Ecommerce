@@ -45,6 +45,12 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"{self.product.product_name}"
+    
+class AvailableDesign(models.Model):
+    available_products = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='Product_Images',null=True,blank=True)
+
+
 
 
 class ProductVariation(models.Model):
@@ -62,3 +68,6 @@ class ProductOption(models.Model):
 
     def __str__(self):
         return f"{self.variation.product.product_name} - {self.variation.name} - {self.name}"   
+
+
+
