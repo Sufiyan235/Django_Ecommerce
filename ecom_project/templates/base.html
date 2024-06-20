@@ -8,7 +8,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
+    <link rel="stylesheet" href="{% static "css/messages.css" %}">
     <link rel="mask-icon" href="{% static 'images/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <script src="https://kit.fontawesome.com/b91298469d.js" crossorigin="anonymous"></script>
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
@@ -22,15 +24,10 @@
 </head>
 <body>
     {% include "includes/header.html" %}
-    {% if messages %}
-    {% for msg in messages %}
-        {{msg}}
-    {% endfor %}
-    {% endif %}
     {% block content %}
 
     {% endblock %}
-    {% comment %} {% include "includes/footer.html" %} {% endcomment %}
+    
 
     
     <script src="{% static "js/vendor.bundle.js" %}"></script>

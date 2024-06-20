@@ -1,0 +1,64 @@
+
+.alert-success {
+    background-color: #59e97b;
+    color: #0a0a0a;
+    border: 1px solid #c3e6cb;
+}
+
+/* Styles for warning alert */
+.alert-warning {
+    background-color: #fff3cd; /* Yellowish background */
+    color: #856404; /* Dark yellow text */
+    border: 1px solid #ffeeba; /* Light yellow border */
+}
+
+/* Styles for error alert */
+.alert-error {
+    background-color: #db1626; /* Reddish background */
+    color: white; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Light red border */
+}
+
+
+/* Common styles for all alerts */
+.alert {
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    margin: 0.3rem;
+    font-size: 0.7rem;
+    
+}
+
+.qr_alert_danger{
+    position: absolute;
+    background: red;
+    color: #ffff;
+}
+
+.qr_alert_success{
+    position: absolute;
+    background-color: #59e97b;
+    color: #0a0a0a;
+    border: 1px solid #c3e6cb;
+}
+
+.response-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.response-message {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}
+
+
+
