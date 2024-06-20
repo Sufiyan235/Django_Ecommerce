@@ -58,3 +58,19 @@ def brand_store(request,brand_slug):
         "products":products,
     }
     return render(request,'brand_store.html',context)
+
+
+def cart(request):
+    return render(request,'cart.html')
+
+
+def checkout(request):
+    return render(request,'checkout_pages/checkout.html')
+
+
+def checkout_shipping(request):
+    return render(request,'checkout_pages/checkout-shipping.html')
+
+
+def checkout_payment(request):
+    return render(request,'checkout_pages/checkout-payment.html')
