@@ -22,12 +22,28 @@ class Brand(models.Model):
         return self.brand_name
     
 
+class ColorVariant(models.Model):
+    color_name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.color_name
+    
+
+class SizeVariant(models.Model):
+    size_name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.size_name
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     price = models.FloatField()
     product_image = models.ImageField(upload_to="Product_Images")
     product_slug = models.SlugField(max_length=50)
+    color_variant = models.ManyToManyField(ColorVariant,blank=True)
+    size_variant = models.ManyToManyField(SizeVariant,blank=True)
     # description=models.TextField(max_length=300,blank=True)
     stock=models.IntegerField()
     is_available=models.BooleanField(default=True)
@@ -38,6 +54,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+    
+
+    def get_product_price_by_size(self,size):
+        return self.price + SizeVariant.objects.get(size_name=size).price
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
@@ -53,21 +73,7 @@ class AvailableDesign(models.Model):
 
 
 
-class ProductVariation(models.Model):
-    product = models.ForeignKey(Product, related_name='variations', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100,null=True,blank=True)  # e.g., 'Size' or 'Color'
-
-    def __str__(self):
-        return f"{self.product.product_name} - {self.name}"
-
-class ProductOption(models.Model):
-    variation = models.ForeignKey(ProductVariation, related_name='options', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)  # e.g., 'Small', 'Medium', 'Red', 'Blue'
-    image = models.ImageField(upload_to="Variation Images")
-    additional_price = models.FloatField(default=0.0)  # Optional: additional cost for the option
-
-    def __str__(self):
-        return f"{self.variation.product.product_name} - {self.variation.name} - {self.name}"   
+ 
 
 
 

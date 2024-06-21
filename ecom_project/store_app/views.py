@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import *
+
 import random
+
 from django.db.models import Q
+
 # Create your views here.
 def home(request):
     categories = Category.objects.all()
@@ -48,6 +51,12 @@ def product_detail(request,id):
         "related_products":related_products,
         "available_designs":available_designs
     }
+
+    if request.GET.get('size'):
+        size = request.GET.get('size')
+        price = product.get_product_price_by_size(size)
+        context['updated_price'] = price
+        context['selected_size'] = size
     return render(request,'details.html',context)
 
 
