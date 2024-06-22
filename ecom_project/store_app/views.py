@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import *
-
+from django.contrib import messages
 import random
 
 from django.db.models import Q
@@ -89,6 +89,30 @@ def add_to_cart(request,product_id):
 def cart(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
+
+    if request.method =='POST':
+        coupon_code = request.POST.get('coupon')
+        coupon_obj = Coupon.objects.filter(coupon_name__icontains = coupon_code)
+        if not coupon_obj.exists() :
+            messages.error(request,'Invalid Coupon')
+            return redirect("cart")
+        
+        if coupon_obj.exists() :
+            messages.error(request,'Coupon Already Exists')
+            return redirect("cart")
+        
+        if cart.get_cart_total() < coupon_obj.minimun_amount:
+            messages.error(request,f'Minimum amount to apply this coupun should be {coupon_obj.minimun_amount}')
+            return redirect("cart")
+        
+        if coupon_obj.is_expired:
+            messages.error(request,"Coupon Expired")
+            return redirect("cart")
+        
+        cart.coupon = coupon_obj[0]
+        cart.save()
+        messages.success(request,'Coupon Applied')
+        
     context = {
         "cart_items":cart_items,
         "cart":cart

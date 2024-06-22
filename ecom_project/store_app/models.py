@@ -71,9 +71,15 @@ class AvailableDesign(models.Model):
     image = models.ImageField(upload_to='Product_Images',null=True,blank=True)
 
 
+class Coupon(models.Model):
+    coupon_name = models.CharField(max_length=50)
+    minimum_amount = models.IntegerField(default=500)
+    discount_amount = models.IntegerField(default=100)
+    is_expired = models.BooleanField(default=False)
 
 class Cart(models.Model):
     user = models.ForeignKey(Account,on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon,on_delete=models.SET_NULL,null=True,blank=True)
     is_paid = models.BooleanField(default=False)
 
     def __str__(self):
@@ -95,12 +101,18 @@ class Cart(models.Model):
                 price.append(size_variant_price)
 
         total_price = sum(price)
-        
+
+    
         if total_price <= 0:
             total_price = 0
             return 0
         
-        # Add the fixed amount and round to 2 decimal places
+        if self.coupon:
+            if total_price > self.coupon.minimum_amount and not self.coupon.is_expired:
+                total_price = total_price - self.coupon.discount_amount
+                return total_price
+                
+
         return round(total_price + 18, 2)
 
 
@@ -132,4 +144,6 @@ class CartItems(models.Model):
         
         # Add the fixed amount and round to 2 decimal places
         return round(total_price + 18, 2)
+
+
 

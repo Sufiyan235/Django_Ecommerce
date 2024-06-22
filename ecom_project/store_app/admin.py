@@ -56,3 +56,9 @@ class CartItemsAdmin(admin.ModelAdmin):
 
 admin.site.register(CartItems,CartItemsAdmin)
 
+class CouponAdmin(admin.ModelAdmin):
+    list_display =['coupon_name','discount_amount','minimum_amount','is_expired']
+
+
+admin.site.register(Coupon,CouponAdmin)
+
