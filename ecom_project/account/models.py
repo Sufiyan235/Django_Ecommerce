@@ -72,3 +72,10 @@ class Account(AbstractBaseUser):
         from store_app.models import CartItems
         return CartItems.objects.filter(cart__is_paid=False,cart__user=self.id).count()
 
+    @property
+    def get_cart_items(self):
+        from store_app.models import CartItems,Cart
+        cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = self.id)
+        cart = Cart.objects.filter(user=self.id).first()
+        return cart_items
+

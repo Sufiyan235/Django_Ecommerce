@@ -89,7 +89,6 @@ def add_to_cart(request,product_id):
 def cart(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
-    print(cart.get_cart_total())
     context = {
         "cart_items":cart_items,
         "cart":cart
