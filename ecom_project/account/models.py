@@ -67,4 +67,8 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    @property
+    def get_cart_count(self):
+        from store_app.models import CartItems
+        return CartItems.objects.filter(cart__is_paid=False,cart__user=self.id).count()
 
