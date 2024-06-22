@@ -1,5 +1,5 @@
 from django.db import models
-
+from account.models import Account
 # Create your models here.
 
 
@@ -41,7 +41,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=100)
     price = models.FloatField()
     product_image = models.ImageField(upload_to="Product_Images")
-    product_slug = models.SlugField(max_length=50)
+    product_slug = models.SlugField(max_length=50,unique=True)
     color_variant = models.ManyToManyField(ColorVariant,blank=True)
     size_variant = models.ManyToManyField(SizeVariant,blank=True)
     # description=models.TextField(max_length=300,blank=True)
@@ -72,8 +72,19 @@ class AvailableDesign(models.Model):
 
 
 
+class Cart(models.Model):
+    user = models.ForeignKey(Account,on_delete=models.CASCADE)
+    is_paid = models.BooleanField(default=False)
 
- 
+    def __str__(self):
+        return self.user.email
+
+
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
+    color_variant = models.ForeignKey(ColorVariant,on_delete=models.SET_NULL,null=True,blank=True)
+    size_variant = models.ForeignKey(SizeVariant,on_delete=models.SET_NULL,null=True,blank=True)
 
 
 

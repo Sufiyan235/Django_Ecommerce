@@ -39,10 +39,20 @@ class ColorVariantAdmin(admin.ModelAdmin):
 
 admin.site.register(ColorVariant,ColorVariantAdmin)
 
-class SIzeVariantAdmin(admin.ModelAdmin):
+class SizeVariantAdmin(admin.ModelAdmin):
     list_display = ['size_name','price']
 
-admin.site.register(SizeVariant,SIzeVariantAdmin)
+admin.site.register(SizeVariant,SizeVariantAdmin)
 
 
+
+class CartAdmin(admin.ModelAdmin):
+    list_display = ["user",'is_paid']
+
+admin.site.register(Cart,CartAdmin)
+
+class CartItemsAdmin(admin.ModelAdmin):
+    list_display = ['cart','product','color_variant','size_variant']
+
+admin.site.register(CartItems,CartItemsAdmin)
 

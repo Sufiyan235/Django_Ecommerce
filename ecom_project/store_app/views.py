@@ -36,8 +36,8 @@ def store(request):
     }
     return render(request,'store.html',context)
 
-def product_detail(request,id):
-    product = Product.objects.get(id=id)
+def product_detail(request,product_slug):
+    product = Product.objects.get(product_slug=product_slug)
     product_images = ProductImage.objects.filter(product=product)
     available_designs = AvailableDesign.objects.filter(available_products=product)
 
@@ -67,6 +67,23 @@ def brand_store(request,brand_slug):
         "products":products,
     }
     return render(request,'brand_store.html',context)
+
+
+def add_to_cart(request,product_id):
+    user = request.user
+    product = Product.objects.get(id=product_id)
+
+    cart ,_ = Cart.objects.get_or_create(user=user)
+    cart_item = CartItems.objects.create(cart=cart,product=product)
+    variant = request.GET.get("variant")
+    if variant :
+        variant = request.GET.get('variant')
+        size_variant = SizeVariant.objects.get(size_name=variant)
+        cart_item.size_variant = size_variant
+        cart_item.save()
+    else:
+        cart_item.save()
+    return redirect("product_detail",product_slug=product.product_slug)
 
 
 def cart(request):

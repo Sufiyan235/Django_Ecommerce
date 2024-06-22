@@ -124,7 +124,7 @@
                                 
                             </div>
                         </div>
-                        <button class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</button>
+                        <a href="{% url "add_to_cart" product.id %}?variant={{selected_size}}" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</a>
                     
                         <!-- Product Highlights-->
                             <div class="my-5">
