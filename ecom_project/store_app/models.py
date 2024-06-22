@@ -78,13 +78,71 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+
+    # def get_cart_total(self):
+    #     cart_items = CartItems.objects.filter(cart__user=self.user)
+    #     price = []
+    #     for cart_item in cart_items:
+    #         price.append(cart_item.product.price)
+    #         if cart_item.color_variant:
+    #             color_variant_price = cart_item.color_variant.price
+
+    #             price.append(color_variant_price)
+
+    #         if cart_item.size_variant:
+    #             size_variant_price = cart_item.size_variant.price
+    #             price.append(size_variant_price)
+    #         total_price = sum(price)
+
+    #     if total_price <= 0:
+    #         total_price = 0
+
+    #     return round(total_price + 18, 2)
+
+    def get_cart_total(self):
+        cart_items = CartItems.objects.filter(cart__user=self.user)
+        price = []
+        
+        for cart_item in cart_items:
+            price.append(cart_item.product.price)
+            
+            if cart_item.color_variant:
+                color_variant_price = cart_item.color_variant.price
+                price.append(color_variant_price)
+
+            if cart_item.size_variant:
+                size_variant_price = cart_item.size_variant.price
+                price.append(size_variant_price)
+
+        total_price = sum(price)
+        
+        if total_price <= 0:
+            total_price = 0
+            return 0
+        
+        # Add the fixed amount and round to 2 decimal places
+        return round(total_price + 18, 2)
+
+
 
 
 class CartItems(models.Model):
-    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE,related_name="cart_items")
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
     color_variant = models.ForeignKey(ColorVariant,on_delete=models.SET_NULL,null=True,blank=True)
     size_variant = models.ForeignKey(SizeVariant,on_delete=models.SET_NULL,null=True,blank=True)
 
 
+    def get_product_price(self):
+        price = [self.product.price]
+
+        if self.color_variant:
+            color_variant_price = self.color_variant.price
+            price.append(color_variant_price)
+
+        if self.size_variant:
+            size_variant_price = self.size_variant.price
+            price.append(size_variant_price)
+        return sum(price)
 

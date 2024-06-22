@@ -1,0 +1,23 @@
+.table-responsive {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.scrollable-tbody {
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+
+.scrollable-tbody tbody {
+    display: block;
+}
+
+.scrollable-tbody tr {
+    display: flex;
+    width: 100%;
+}
+
+.scrollable-tbody td {
+    flex: 1;
+}

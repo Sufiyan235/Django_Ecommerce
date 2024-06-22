@@ -33,51 +33,40 @@
                         </nav>                        <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Your Cart</h3>
                             <div class="table-responsive">
-                                <table class="table align-middle">
-                                    <tbody class="border-0">
-                                        <!-- Cart Item-->
-                                        <div class="row mx-0 py-4 g-0 border-bottom">
-                                            <div class="col-2 position-relative">
-                                                <picture class="d-block border">
-                                                    <img class="img-fluid" src="{% static 'images/products/product-cart-1.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
-                                                </picture>
-                                            </div>
-                                            <div class="col-9 offset-1">
-                                                <div>
-                                                    <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                                        Nike Air VaporMax 2021
-                                                        <i class="ri-close-line ms-3"></i>
-                                                    </h6>
-                                                    <span class=" text-muted fw-bolder text-uppercase fs-9">Size: 9 / Qty: 1 </span> 
-                                                    <div style="padding-left:10px; display: inline;">
-
-                                                        <i class="fa-solid fa-sort-up"></i> <i class="fa-solid fa-sort-down"></i>
+                                {% if cart_items %}
+                                    <table class="table align-middle">
+                                        <tbody class="border-0">
+                                                {% for cart_item in cart_items %}
+                                                <!-- Cart Item-->
+                                                <div class="row mx-0 py-4 g-0 border-bottom">
+                                                    <div class="col-2 position-relative">
+                                                        <picture class="d-block border">
+                                                            <img class="img-fluid" src="{{cart_item.product.product_image.url}}" alt="HTML Bootstrap Template by Pixel Rocket">
+                                                        </picture>
                                                     </div>
-                                                </div>
-                                                <p class="fw-bolder text-end text-muted m-0">$85.00</p>
-                                            </div>
-                                        </div>                                        <!-- / Cart Item-->
-                                        <!-- Cart Item-->
-                                        <div class="row mx-0 py-4 g-0 border-bottom">
-                                            <div class="col-2 position-relative">
-                                                <picture class="d-block border">
-                                                    <img class="img-fluid" src="{% static 'images/products/product-cart-2.jpg' %}" alt="HTML Bootstrap Template by Pixel Rocket">
-                                                </picture>
-                                            </div>
-                                            <div class="col-9 offset-1">
-                                                <div>
-                                                    <h6 class="justify-content-between d-flex align-items-start mb-2">
-                                                        Nike ZoomX Vaporfly
-                                                        <i class="ri-close-line ms-3"></i>
-                                                    </h6>
-                                                    <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: 11 / Qty: 1</span>
-                                                    
-                                                </div>
-                                                <p class="fw-bolder text-end text-muted m-0">$125.00</p>
-                                            </div>
-                                        </div>                                        <!-- / Cart Item-->
-                                    </tbody>
-                                </table>
+                                                    <div class="col-9 offset-1">
+                                                        <div>
+                                                            <h6 class="justify-content-between d-flex align-items-start mb-2">
+                                                                {{cart_item.product.product_name}}
+                                                                <a href="{% url "remove_cart_item" cart_item.id %}" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
+                                                            </h6>
+                                                            <span class=" text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1 </span> 
+                                                            <div style="padding-left:10px; display: inline;">
+
+                                                                <i class="fa-solid fa-sort-up"></i> <i class="fa-solid fa-sort-down"></i>
+                                                            </div>
+                                                        </div>
+                                                        <p class="fw-bolder text-end text-muted m-0">${{cart_item.get_product_price}}</p>
+                                                    </div>
+                                                </div>                                        
+                                                
+                                                {% endfor %}
+                                            
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <img src="{% static 'images/banners/empty-cart.png' %}">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -88,9 +77,9 @@
                             <div class="d-flex flex-column flex-md-row justify-content-md-between mb-4 mb-md-2">
                                 <div>
                                     <p class="m-0 fw-bold fs-5">Grand Total</p>
-                                    <span class="text-muted small">Inc $45.89 sales tax</span>
+                                    <span class="text-muted small">Inc $18 GST</span>
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">$422.99</p>
+                                <p class="m-0 fs-5 fw-bold">{{cart.get_cart_total}}</p>
                             </div>
                         </div>
                         <div class="py-4">

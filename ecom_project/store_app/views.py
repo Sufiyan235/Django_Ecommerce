@@ -87,7 +87,23 @@ def add_to_cart(request,product_id):
 
 
 def cart(request):
-    return render(request,'cart.html')
+    cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
+    cart = Cart.objects.filter(user=request.user).first()
+    print(cart.get_cart_total())
+    context = {
+        "cart_items":cart_items,
+        "cart":cart
+    }
+    return render(request,'cart.html',context)
+
+
+def remove_cart_item(request,cart_item_id):
+    try:
+        cart_item = CartItems.objects.get(id=cart_item_id)
+        cart_item.delete()
+    except Exception as e:
+        print(e)
+    return redirect("cart")
 
 
 def checkout(request):

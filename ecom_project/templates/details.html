@@ -124,7 +124,7 @@
                                 
                             </div>
                         </div>
-                        <a href="{% url "add_to_cart" product.id %}?variant={{selected_size}}" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</a>
+                        <a href="{% url "add_to_cart" product.id %}?variant={% if selected_size %}{{ selected_size }}{% else %}{{ product.size_variant.first }}{% endif %}" class="btn btn-dark w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow">Add To Shopping Bag</a>
                     
                         <!-- Product Highlights-->
                             <div class="my-5">
