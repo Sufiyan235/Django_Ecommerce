@@ -92,14 +92,14 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <form method='POST' action="{% url "cart" %}">
+                        <form method='POST' action="{% url "cart" %}?next_page=cart">
                             {% csrf_token %}
                             <div class="input-group mb-0">
                                 <input type="text" class="form-control" name="coupon" placeholder="Enter coupon code">
                                 <button type="submit" class="btn btn-secondary btn-sm px-4">Apply</button>
                             </div>
                             {% if cart.coupon %}
-                            <a href="{% url "remove_coupon" cart.id %}" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
+                            <a href="{% url "remove_coupon" cart.id %}?next_page=cart" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
                             {% endif %}
                         </form>
                         

@@ -97,23 +97,34 @@ def cart(request):
         coupon_obj = Coupon.objects.filter(coupon_name__icontains = coupon_code)
         if not coupon_obj.exists() :
             messages.error(request,'Invalid Coupon')
+            if request.GET.get("next_page"):
+                return redirect(request.GET.get("next_page"))
             return redirect("cart")
         
         if cart.coupon :
             messages.error(request,'Coupon Already Exists')
+            if request.GET.get("next_page"):
+                return redirect(request.GET.get("next_page"))
             return redirect("cart")
         
         if cart.get_cart_total() < coupon_obj[0].minimum_amount:
             messages.error(request,f'Minimum amount to apply this coupun should be {coupon_obj[0].minimum_amount}')
+            if request.GET.get("next_page"):
+                return redirect(request.GET.get("next_page"))
             return redirect("cart")
         
         if coupon_obj[0].is_expired:
             messages.error(request,"Coupon Expired")
+            if request.GET.get("next_page"):
+                return redirect(request.GET.get("next_page"))
             return redirect("cart")
         
         cart.coupon = coupon_obj[0]
         cart.save()
         messages.success(request,'Coupon Applied')
+        if request.GET.get("next_page"):
+            return redirect(request.GET.get("next_page"))
+        
     context = {
         "cart_items":cart_items,
         "cart":cart
@@ -126,6 +137,8 @@ def remove_coupon(request,cart_id):
     cart.coupon = None
     cart.save()
     messages.success(request,'Coupon Removed')
+    if request.GET.get("next_page"):
+        return redirect(request.GET.get("next_page"))
     return redirect('cart')
 
 @login_required(login_url="login")

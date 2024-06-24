@@ -263,14 +263,14 @@
                             </div>
                         </div>
                         <div class="py-4">
-                          <form method='POST' action="{% url "cart" %}">
+                          <form method='POST' action="{% url "cart" %}?next_page=checkout">
                             {% csrf_token %}
                             <div class="input-group mb-0">
                                 <input type="text" class="form-control" name="coupon" placeholder="Enter your coupon code">
                                 <button class="btn btn-dark btn-sm px-4">Apply</button>
                             </div>
                             {% if cart.coupon %}
-                            <a href="{% url "remove_coupon" cart.id %}" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
+                            <a href="{% url "remove_coupon" cart.id %}?next_page=checkout" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
                             {% endif %}
                           </form>
                         </div>
