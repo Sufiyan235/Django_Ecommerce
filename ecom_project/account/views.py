@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def register(request):
@@ -40,10 +41,36 @@ def signin(request):
         messages.error(request,"Invalid Credentials")
     return render(request,'accounts/login.html')
 
-
+@login_required(login_url="login")
 def signout(request):
     logout(request)
     return redirect('login')
+
+
+@login_required(login_url="login")
+def update_shipping_address(request):
+    if request.method == 'POST':
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+        email = request.POST.get("email")
+        address = request.POST.get("address")
+        country = request.POST.get("country")
+        state = request.POST.get("state")
+        zip_code = request.POST.get("zip_code")
+
+        fetched_acc = Account.objects.get(id=request.user.id)
+        fetched_acc.first_name = fname
+        fetched_acc.last_name = lname
+        fetched_acc.email = email
+        fetched_acc.address = address
+        fetched_acc.country = country
+        fetched_acc.state = state
+        fetched_acc.zip_code = zip_code
+
+        fetched_acc.save()
+
+        messages.success(request,"Information Updated!!")
+        return redirect("checkout")
 
 
 def forgotpassword(request):

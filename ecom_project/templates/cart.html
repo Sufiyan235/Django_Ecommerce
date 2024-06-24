@@ -48,7 +48,7 @@
                                                         <div>
                                                             <h6 class="justify-content-between d-flex align-items-start mb-2">
                                                                 {{cart_item.product.product_name}}
-                                                                <a href="{% url "remove_cart_item" cart_item.id %}" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
+                                                                <a href="{% url "remove_cart_item" cart_item.id %}?next_page=cart" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
                                                             </h6>
                                                             <span class=" text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1 </span> 
                                                             <div style="padding-left:10px; display: inline;">

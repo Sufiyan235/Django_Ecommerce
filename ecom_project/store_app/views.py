@@ -130,16 +130,32 @@ def remove_coupon(request,cart_id):
 
 @login_required(login_url="login")
 def remove_cart_item(request,cart_item_id):
+    
     try:
         cart_item = CartItems.objects.get(id=cart_item_id)
         cart_item.delete()
     except Exception as e:
         print(e)
+    if request.GET.get("next_page"):
+        return redirect(request.GET.get("next_page"))
     return redirect("cart")
+
+
 
 @login_required(login_url="login")
 def checkout(request):
-    return render(request,'checkout_pages/checkout.html')
+    cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
+    cart = Cart.objects.filter(user=request.user).first()
+    grand_total = cart.get_cart_total() + 8.95
+    
+    context = {
+        "cart_items":cart_items,
+        "cart":cart,
+        "grand_total":grand_total
+    }
+    return render(request,'checkout_pages/checkout.html',context)
+
+
 
 @login_required(login_url="login")
 def checkout_shipping(request):

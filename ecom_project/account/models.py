@@ -44,9 +44,12 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     first_name=models.CharField(max_length=100)
     last_name=models.CharField(max_length=100)
-    address=models.TextField(max_length=100)
     email=models.EmailField(max_length=100,unique=True)
     phone_number=models.CharField(max_length=20)
+    address=models.TextField(max_length=500)
+    country=models.CharField(max_length=20,null=True,blank=True)
+    state=models.CharField(max_length=20,null=True,blank=True)
+    zip_code=models.CharField(max_length=20,null=True,blank=True)
     date_joined=models.DateTimeField(auto_now_add=True)
     last_login=models.DateTimeField(auto_now_add=True)
     is_admin=models.BooleanField(default=False)
