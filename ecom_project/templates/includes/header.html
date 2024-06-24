@@ -77,7 +77,7 @@
                             <!-- / Cart Header-->
                         
                             <!-- Cart Items-->
-                            <div>
+                            <div style="overflow:auto;height:40vh">
                                 {% for cart_item in request.user.get_cart_items %}
                                 <!-- Cart Product-->
                                 <div class="row mx-0 py-4 g-0 border-bottom">

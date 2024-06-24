@@ -2,10 +2,11 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import messages
 import random
-
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 # Create your views here.
+@login_required(login_url="login")
 def home(request):
     categories = Category.objects.all()
     brands = Brand.objects.all()
@@ -15,7 +16,7 @@ def home(request):
     }
     return render(request,'home.html',context)
 
-
+@login_required(login_url="login")
 def category_store(request,category_slug):
 
     category = Category.objects.get(category_slug=category_slug)
@@ -26,7 +27,7 @@ def category_store(request,category_slug):
     }
     return render(request,'category_store.html',context)
 
-
+@login_required(login_url="login")
 def store(request):
     products = Product.objects.all()
     listed=list(products)
@@ -36,6 +37,7 @@ def store(request):
     }
     return render(request,'store.html',context)
 
+@login_required(login_url="login")
 def product_detail(request,product_slug):
     product = Product.objects.get(product_slug=product_slug)
     product_images = ProductImage.objects.filter(product=product)
@@ -59,7 +61,7 @@ def product_detail(request,product_slug):
         context['selected_size'] = size
     return render(request,'details.html',context)
 
-
+@login_required(login_url="login")
 def brand_store(request,brand_slug):
     brand = Brand.objects.get(brand_slug=brand_slug)
     products = Product.objects.filter(brand=brand, is_available=True)
@@ -68,7 +70,7 @@ def brand_store(request,brand_slug):
     }
     return render(request,'brand_store.html',context)
 
-
+@login_required(login_url="login")
 def add_to_cart(request,product_id):
     user = request.user
     product = Product.objects.get(id=product_id)
@@ -85,7 +87,7 @@ def add_to_cart(request,product_id):
         cart_item.save()
     return redirect("product_detail",product_slug=product.product_slug)
 
-
+@login_required(login_url="login")
 def cart(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
@@ -97,22 +99,21 @@ def cart(request):
             messages.error(request,'Invalid Coupon')
             return redirect("cart")
         
-        if coupon_obj.exists() :
+        if cart.coupon :
             messages.error(request,'Coupon Already Exists')
             return redirect("cart")
         
-        if cart.get_cart_total() < coupon_obj.minimun_amount:
-            messages.error(request,f'Minimum amount to apply this coupun should be {coupon_obj.minimun_amount}')
+        if cart.get_cart_total() < coupon_obj[0].minimum_amount:
+            messages.error(request,f'Minimum amount to apply this coupun should be {coupon_obj[0].minimum_amount}')
             return redirect("cart")
         
-        if coupon_obj.is_expired:
+        if coupon_obj[0].is_expired:
             messages.error(request,"Coupon Expired")
             return redirect("cart")
         
         cart.coupon = coupon_obj[0]
         cart.save()
         messages.success(request,'Coupon Applied')
-        
     context = {
         "cart_items":cart_items,
         "cart":cart
@@ -120,6 +121,14 @@ def cart(request):
     return render(request,'cart.html',context)
 
 
+def remove_coupon(request,cart_id):
+    cart = Cart.objects.get(id=cart_id)
+    cart.coupon = None
+    cart.save()
+    messages.success(request,'Coupon Removed')
+    return redirect('cart')
+
+@login_required(login_url="login")
 def remove_cart_item(request,cart_item_id):
     try:
         cart_item = CartItems.objects.get(id=cart_item_id)
@@ -128,14 +137,14 @@ def remove_cart_item(request,cart_item_id):
         print(e)
     return redirect("cart")
 
-
+@login_required(login_url="login")
 def checkout(request):
     return render(request,'checkout_pages/checkout.html')
 
-
+@login_required(login_url="login")
 def checkout_shipping(request):
     return render(request,'checkout_pages/checkout-shipping.html')
 
-
+@login_required(login_url="login")
 def checkout_payment(request):
     return render(request,'checkout_pages/checkout-payment.html')

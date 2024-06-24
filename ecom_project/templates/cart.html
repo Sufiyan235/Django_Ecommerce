@@ -32,7 +32,7 @@
                             </ul>
                         </nav>                        <div class="mt-5">
                             <h3 class="fs-5 fw-bolder mb-0 border-bottom pb-4">Your Cart</h3>
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="overflow:auto;height:40vh">
                                 {% if cart_items %}
                                     <table class="table align-middle">
                                         <tbody class="border-0">
@@ -79,7 +79,7 @@
                                     <p class="m-0 fw-bold fs-5">Grand Total</p>
                                     <span class="text-muted small">Inc $18 GST</span>
                                 </div>
-                                <p class="m-0 fs-5 fw-bold">{{cart.get_cart_total}}</p>
+                                <p class="m-0 fs-5 fw-bold">{{cart.get_cart_total}} </p>
                             </div>
                         </div>
                         <div class="py-4">
@@ -92,12 +92,15 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <form method='POST'>
+                        <form method='POST' action="{% url "cart" %}">
                             {% csrf_token %}
                             <div class="input-group mb-0">
                                 <input type="text" class="form-control" name="coupon" placeholder="Enter coupon code">
                                 <button type="submit" class="btn btn-secondary btn-sm px-4">Apply</button>
                             </div>
+                            {% if cart.coupon %}
+                            <a href="{% url "remove_coupon" cart.id %}" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
+                            {% endif %}
                         </form>
                         
                         </div>

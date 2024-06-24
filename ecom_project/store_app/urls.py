@@ -14,4 +14,5 @@ urlpatterns = [
     path("checkout/",views.checkout,name="checkout"),
     path("checkout_shipping/",views.checkout_shipping,name="checkout_shipping"),
     path("checkout_payment/",views.checkout_payment,name="checkout_payment"),
+    path("remove_coupon/<int:cart_id>/",views.remove_coupon,name="remove_coupon"),
 ]

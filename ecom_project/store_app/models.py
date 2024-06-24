@@ -99,6 +99,7 @@ class Cart(models.Model):
             if cart_item.size_variant:
                 size_variant_price = cart_item.size_variant.price
                 price.append(size_variant_price)
+                
 
         total_price = sum(price)
 
@@ -106,11 +107,11 @@ class Cart(models.Model):
         if total_price <= 0:
             total_price = 0
             return 0
-        
+
         if self.coupon:
             if total_price > self.coupon.minimum_amount and not self.coupon.is_expired:
                 total_price = total_price - self.coupon.discount_amount
-                return total_price
+                return round(total_price + 18,2)
                 
 
         return round(total_price + 18, 2)
