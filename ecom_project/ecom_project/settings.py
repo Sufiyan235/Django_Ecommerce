@@ -140,3 +140,7 @@ EMAIL_HOST_USER="actifyzone1@gmail.com"
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_PASSWORD="lytg pccu lkqa wlqz"
+
+
+razor_pay_key_id = "rzp_test_ktWFNwvX50ZW4J"
+key_secret = "u64z74qoTaccM9iIFDbW2S2j"

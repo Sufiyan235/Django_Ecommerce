@@ -164,7 +164,7 @@ def checkout(request):
     context = {
         "cart_items":cart_items,
         "cart":cart,
-        "grand_total":grand_total
+        "grand_total":round(grand_total,2)
     }
     return render(request,'checkout_pages/checkout.html',context)
 
@@ -172,8 +172,26 @@ def checkout(request):
 
 @login_required(login_url="login")
 def checkout_shipping(request):
-    return render(request,'checkout_pages/checkout-shipping.html')
+    cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
+    cart = Cart.objects.filter(user=request.user).first()
+    grand_total = cart.get_cart_total() + 8.95
+
+    context = {
+        "cart_items":cart_items,
+        "cart":cart,
+        "grand_total":round(grand_total,2)
+    }
+    return render(request,'checkout_pages/checkout-shipping.html',context)
 
 @login_required(login_url="login")
 def checkout_payment(request):
-    return render(request,'checkout_pages/checkout-payment.html')
+    cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
+    cart = Cart.objects.filter(user=request.user).first()
+    grand_total = cart.get_cart_total() + 8.95
+
+    context = {
+        "cart_items":cart_items,
+        "cart":cart,
+        "grand_total":round(grand_total,2)
+    }
+    return render(request,'checkout_pages/checkout-payment.html',context)
