@@ -37,14 +37,14 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Contact</span>
-                                        <span class="small">test@email.com</span>
+                                        <span class="small">{{request.user.email}}</span>
                                     </div>
                                     <a href="{% url "checkout" %}" class="text-muted small" role="button">Change</a>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Deliver To</span>
-                                        <span class="small">123 Street, London, SM3 5TY, United Kingdom</span>
+                                        <span class="small">{{request.user.address}}</span>
                                     </div>
                                     <a href="{% url "checkout_shipping" %}" class="text-muted small" role="button">Change</a>
                                 </li>
@@ -164,7 +164,7 @@
                           <!-- Cart Item-->
                           <div class="row mx-0 py-4 g-0 border-bottom">
                               <div class="col-2 position-relative">
-                                      <span class="checkout-item-qty">3</span>
+                                      <span class="checkout-item-qty">{{cart_item.quantity}}</span>
                                   <picture class="d-block border">
                                       <img class="img-fluid" src="{{cart_item.product.product_image.url}}" alt="HTML Bootstrap Template by Pixel Rocket">
                                   </picture>
@@ -175,7 +175,7 @@
                                         {{cart_item.product.product_name}}
                                         <a href="{% url "remove_cart_item" cart_item.id %}?next_page=checkout" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
                                       </h6>
-                                      <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1</span>
+                                      <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: {{cart_item.quantity}}</span>
                                   </div>
                                   <p class="fw-bolder text-end text-muted m-0">${{cart_item.get_product_price}}</p>
                               </div>
@@ -203,11 +203,26 @@
                                 <p class="m-0 fs-5 fw-bold">${{grand_total}}</p>
                             </div>
                         </div>
+                        {% if messages %}
+                          <div class="container">
+                              {% for message in messages %}
+                              <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% endif %}" role="alert">
+                                  {{ message }}
+                              </div>
+                              {% endfor %}
+                          </div>
+                        {% endif %}
                         <div class="py-4">
+                          <form method='POST' action="{% url "cart" %}?next_page=checkout_payment">
+                            {% csrf_token %}
                             <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" name="coupon" placeholder="Enter your coupon code">
                                 <button class="btn btn-dark btn-sm px-4">Apply</button>
                             </div>
+                            {% if cart.coupon %}
+                            <a href="{% url "remove_coupon" cart.id %}?next_page=checkout" class="btn btn-secondary btn-sm px-4 py-2 my-2">{{cart.coupon.coupon_name}}</a>
+                            {% endif %}
+                          </form>
                         </div>
                     </div>
                 </div>

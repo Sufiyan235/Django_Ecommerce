@@ -28,7 +28,7 @@ class AvailableDesignInline(admin.TabularInline):
 # Admin class for Product with inlines for ProductImage and ProductVariation
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline,AvailableDesignInline]
-    list_display = ('product_name', 'price', 'stock', 'is_available', 'category', 'brand' )
+    list_display = ('id','product_name', 'price', 'stock', 'is_available', 'category', 'brand' )
     prepopulated_fields = {'product_slug': ('product_name',)}
 
 admin.site.register(Product, ProductAdmin)

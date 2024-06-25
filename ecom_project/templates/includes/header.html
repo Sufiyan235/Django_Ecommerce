@@ -94,7 +94,7 @@
                                                 {% comment %} <i class="ri-close-line ms-3"></i> {% endcomment %}
                                                 <a href="{% url "remove_cart_item" cart_item.id %}" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
                                             </h6>
-                                            <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1</span>
+                                            <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: {{cart_item.quantity}}</span>
                                         </div>
                                         <p class="fw-bolder text-end text-muted m-0">${{cart_item.get_product_price}}</p>
                                     </div>

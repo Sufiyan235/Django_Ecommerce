@@ -50,10 +50,11 @@
                                                                 {{cart_item.product.product_name}}
                                                                 <a href="{% url "remove_cart_item" cart_item.id %}?next_page=cart" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
                                                             </h6>
-                                                            <span class=" text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1 </span> 
+                                                            <span class=" text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: {{cart_item.quantity}} </span> 
                                                             <div style="padding-left:10px; display: inline;">
 
-                                                                <i class="fa-solid fa-sort-up"></i> <i class="fa-solid fa-sort-down"></i>
+                                                                <a href="{% url "add_quantity" cart.id cart_item.product.id %}"><i class="fa-solid fa-sort-up"></i></a> 
+                                                                <a href = "{% url "remove_quantity" cart.id cart_item.product.id %}"><i class="fa-solid fa-sort-down"></i></a>
                                                             </div>
                                                         </div>
                                                         <p class="fw-bolder text-end text-muted m-0">${{cart_item.get_product_price}}</p>

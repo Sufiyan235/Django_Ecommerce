@@ -132,6 +132,22 @@ def cart(request):
     return render(request,'cart.html',context)
 
 
+
+def add_quantity(request,cart_id,product_id):
+    cart_obj = Cart.objects.get(id=cart_id)
+    cart_item_obj = CartItems.objects.filter(cart=cart_obj,product=product_id).first()
+    cart_item_obj.quantity +=1
+    cart_item_obj.save() 
+    return redirect("cart")
+
+
+def remove_quantity(request,cart_id,product_id):
+    cart_obj = Cart.objects.get(id=cart_id)
+    cart_item_obj = CartItems.objects.filter(cart=cart_obj,product=product_id).first()
+    cart_item_obj.quantity -=1
+    cart_item_obj.save() 
+    return redirect("cart")
+
 def remove_coupon(request,cart_id):
     cart = Cart.objects.get(id=cart_id)
     cart.coupon = None
@@ -140,6 +156,7 @@ def remove_coupon(request,cart_id):
     if request.GET.get("next_page"):
         return redirect(request.GET.get("next_page"))
     return redirect('cart')
+
 
 @login_required(login_url="login")
 def remove_cart_item(request,cart_item_id):
@@ -159,7 +176,10 @@ def remove_cart_item(request,cart_item_id):
 def checkout(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
-    grand_total = cart.get_cart_total() + 8.95
+    if cart.get_cart_total() > 0:
+        grand_total = cart.get_cart_total() + 8.95
+
+    grand_total = cart.get_cart_total()
     
     context = {
         "cart_items":cart_items,
@@ -174,7 +194,10 @@ def checkout(request):
 def checkout_shipping(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
-    grand_total = cart.get_cart_total() + 8.95
+    if cart.get_cart_total() > 0:
+        grand_total = cart.get_cart_total() + 8.95
+
+    grand_total = cart.get_cart_total()
 
     context = {
         "cart_items":cart_items,
@@ -183,12 +206,15 @@ def checkout_shipping(request):
     }
     return render(request,'checkout_pages/checkout-shipping.html',context)
 
+
 @login_required(login_url="login")
 def checkout_payment(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
-    grand_total = cart.get_cart_total() + 8.95
+    if cart.get_cart_total() > 0:
+        grand_total = cart.get_cart_total() + 8.95
 
+    grand_total = cart.get_cart_total()
     context = {
         "cart_items":cart_items,
         "cart":cart,

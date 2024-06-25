@@ -225,7 +225,7 @@
                             <!-- Cart Item-->
                             <div class="row mx-0 py-4 g-0 border-bottom">
                                 <div class="col-2 position-relative">
-                                        <span class="checkout-item-qty">3</span>
+                                        <span class="checkout-item-qty">{{cart_item.quantity}}</span>
                                     <picture class="d-block border">
                                         <img class="img-fluid" src="{{cart_item.product.product_image.url}}" alt="HTML Bootstrap Template by Pixel Rocket">
                                     </picture>
@@ -236,7 +236,7 @@
                                           {{cart_item.product.product_name}}
                                           <a href="{% url "remove_cart_item" cart_item.id %}?next_page=checkout" style="text-decoration:none;"><i class="ri-close-line ms-3"></i></a>
                                         </h6>
-                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: 1</span>
+                                        <span class="d-block text-muted fw-bolder text-uppercase fs-9">Size: {{cart_item.size_variant}} / Qty: {{cart_item.quantity}}</span>
                                     </div>
                                     <p class="fw-bolder text-end text-muted m-0">${{cart_item.get_product_price}}</p>
                                 </div>
