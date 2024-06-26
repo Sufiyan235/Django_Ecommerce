@@ -25,8 +25,8 @@
                                         href="{% url "cart" %}">Your Cart</a></li>
                                 <li class="me-4"><a class="nav-link-checkout active"
                                         href="{% url "checkout" %}">Information</a></li>
-                                <li class="me-4"><a class="nav-link-checkout "
-                                        href="{% url 'checkout_shipping' %}">Shipping</a></li>
+                                {% comment %} <li class="me-4"><a class="nav-link-checkout "
+                                        href="{% url 'checkout_shipping' %}">Shipping</a></li> {% endcomment %}
                                 <li><a class="nav-link-checkout nav-link-last "
                                         href="{% url "checkout_payment" %}">Payment</a></li>
                             </ul>
@@ -46,7 +46,7 @@
                               {% endfor %}
                           </div>
                         {% endif %}
-                      <form method='POST' action="{% url "update_shipping_address" %}">
+                      <form method='POST' action="{% url "checkout" %}">
                         {% csrf_token %}
                           <div class="row">
                             <!-- First Name-->
@@ -70,6 +70,11 @@
                               <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" name='email' class="form-control" id="email" value="{{request.user.email}}" required>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="email" class="form-label">Phone Number</label>
+                                <input type="text" name='phone' class="form-control" id="email" value="{{request.user.phone_number}}" required>
                               </div>
                           
                               <!-- Mailing List Signup-->
@@ -106,15 +111,15 @@
                                 <input type="text" class="form-control" name="address" id="address" placeholder="123 Some Street Somewhere" value="{{request.user.address}}" required>
                               </div>
                             </div>
+
+
+                            
                           
                             <!-- Country-->
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label for="country" class="form-label">Country</label>
-                                <select class="form-select" name="country" id="country" required="">
-                                  <option value="">Please Select...</option>
-                                  <option>United States</option>
-                                </select>
+                                <input type="text" class="form-control" name="country" id="address" placeholder="123 Some Street Somewhere" value="{{request.user.country}}" required>
                               </div>
                             </div>
                           
@@ -122,10 +127,7 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label for="state" class="form-label">State</label>
-                                <select class="form-select" name="state" id="state" required="">
-                                  <option value="">Please Select...</option>
-                                  <option>California</option>
-                                </select>
+                                <input type="text" class="form-control" name="state" id="address" placeholder="123 Some Street Somewhere" value="{{request.user.state}}" required>
                               </div>
                             </div>
                           
@@ -210,7 +212,7 @@
                           <div class="pt-5 mt-5 pb-5 border-top d-flex justify-content-md-end align-items-center">
                             <button  style="margin-right:5px;" type="submit" class="btn btn-dark w-100 w-md-auto" role="button">Submit</button>
 
-                            <a href="{% url 'checkout_shipping' %}" class="btn btn-dark w-100 w-md-auto" role="button">Proceed to shipping</a>
+                            <a href="{% url 'checkout_payment' %}" class="btn btn-dark w-100 w-md-auto" role="button">Proceed to Payment</a>
 
                           </div>                       
                         </div>

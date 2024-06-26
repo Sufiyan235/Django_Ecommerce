@@ -25,8 +25,8 @@
                                         href="{% url "cart" %}">Your Cart</a></li>
                                 <li class="me-4"><a class="nav-link-checkout "
                                         href="{% url "checkout" %}">Information</a></li>
-                                <li class="me-4"><a class="nav-link-checkout "
-                                        href="{% url 'checkout_shipping' %}">Shipping</a></li>
+                                {% comment %} <li class="me-4"><a class="nav-link-checkout "
+                                        href="{% url 'checkout_shipping' %}">Shipping</a></li> {% endcomment %}
                                 <li><a class="nav-link-checkout nav-link-last "
                                         href="{% url "checkout_payment" %}">Payment</a></li>
                             </ul>

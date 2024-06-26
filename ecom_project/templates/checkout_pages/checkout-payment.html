@@ -26,8 +26,8 @@
                                         href="{% url "cart" %}">Your Cart</a></li>
                                 <li class="me-4"><a class="nav-link-checkout "
                                         href="{% url "checkout" %}">Information</a></li>
-                                <li class="me-4"><a class="nav-link-checkout "
-                                        href="{% url "checkout_shipping" %}">Shipping</a></li>
+                                {% comment %} <li class="me-4"><a class="nav-link-checkout "
+                                        href="{% url "checkout_shipping" %}">Shipping</a></li> {% endcomment %}
                                 <li><a class="nav-link-checkout nav-link-last active"
                                         href="{% url "checkout_payment" %}">Payment</a></li>
                             </ul>
@@ -37,7 +37,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Contact</span>
-                                        <span class="small">{{request.user.email}}</span>
+                                        <span class="small">{{request.user.phone_number}}</span>
                                     </div>
                                     <a href="{% url "checkout" %}" class="text-muted small" role="button">Change</a>
                                 </li>
@@ -46,15 +46,15 @@
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Deliver To</span>
                                         <span class="small">{{request.user.address}}</span>
                                     </div>
-                                    <a href="{% url "checkout_shipping" %}" class="text-muted small" role="button">Change</a>
+                                    {% comment %} <a href="{% url "checkout_shipping" %}" class="text-muted small" role="button">Change</a> {% endcomment %}
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {% comment %} <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div class="d-flex justify-content-start align-items-center">
                                         <span class="text-muted small me-2 f-w-36 fw-bolder">Method</span>
                                         <span class="small">UPS Priority Delivery</span>
                                     </div>
-                                    <a href="{% url "checkout_shipping" %}" class="text-muted small" role="button">Change</a>
-                                </li>
+                                    {% comment %} <a href="{% url "checkout_shipping" %}" class="text-muted small" role="button">Change</a> 
+                                </li> {% endcomment %}
                             </ul><!-- / Checkout Information Summary-->
                             
                             <!-- Checkout Panel Information-->
@@ -150,8 +150,8 @@
                             </div>
                             
                             <div class="pt-5 mt-5 pb-5 border-top d-flex flex-column flex-md-row justify-content-between align-items-center">
-                              <a href="{% url "checkout_shipping" %}" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Back to
-                                shipping</a>
+                              <a href="{% url "checkout" %}" class="btn ps-md-0 btn-link fw-bolder w-100 w-md-auto mb-2 mb-md-0" role="button">Back to
+                                Information</a>
                               <a href="#" class="btn btn-dark w-100 w-md-auto" role="button">Complete Order</a>
                             </div>
                         </div>

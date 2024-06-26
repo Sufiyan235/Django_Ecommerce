@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from .models import *
+from order_app.models import Order
 from django.contrib import messages
 import random
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+import datetime
 # Create your views here.
 @login_required(login_url="login")
 def home(request):
@@ -180,6 +181,41 @@ def checkout(request):
         grand_total = cart.get_cart_total() + 8.95
 
     grand_total = cart.get_cart_total()
+    if request.method == 'POST':
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+        country = request.POST.get("country")
+        state = request.POST.get("state")
+        zip_code = request.POST.get("zip_code")
+
+        fetched_acc = Account.objects.get(id=request.user.id)
+        fetched_acc.first_name = fname
+        fetched_acc.last_name = lname
+        fetched_acc.email = email
+        fetched_acc.phone_number = phone
+        fetched_acc.address = address
+        fetched_acc.country = country
+        fetched_acc.state = state
+        fetched_acc.zip_code = zip_code
+        fetched_acc.save()
+
+        new_order = Order.objects.create(user=request.user,total_price=grand_total,status="new",address=address,country=country,state=state,zip_code=zip_code)
+
+        new_order.products.set(cart_items)
+        
+
+        yr=int(datetime.date.today().strftime("%Y"))
+        dt=int(datetime.date.today().strftime("%d"))
+        mt=int(datetime.date.today().strftime("%m"))
+        d=datetime.date(yr,mt,dt)
+        current_date=d.strftime("%Y%m%d")
+        new_order.order_number=current_date+str(new_order.id)
+
+        new_order.save()
+    
     
     context = {
         "cart_items":cart_items,
@@ -190,21 +226,21 @@ def checkout(request):
 
 
 
-@login_required(login_url="login")
-def checkout_shipping(request):
-    cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
-    cart = Cart.objects.filter(user=request.user).first()
-    if cart.get_cart_total() > 0:
-        grand_total = cart.get_cart_total() + 8.95
+# @login_required(login_url="login")
+# def checkout_shipping(request):
+#     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
+#     cart = Cart.objects.filter(user=request.user).first()
+#     if cart.get_cart_total() > 0:
+#         grand_total = cart.get_cart_total() + 8.95
 
-    grand_total = cart.get_cart_total()
+#     grand_total = cart.get_cart_total()
 
-    context = {
-        "cart_items":cart_items,
-        "cart":cart,
-        "grand_total":round(grand_total,2)
-    }
-    return render(request,'checkout_pages/checkout-shipping.html',context)
+#     context = {
+#         "cart_items":cart_items,
+#         "cart":cart,
+#         "grand_total":round(grand_total,2)
+#     }
+#     return render(request,'checkout_pages/checkout-shipping.html',context)
 
 
 @login_required(login_url="login")

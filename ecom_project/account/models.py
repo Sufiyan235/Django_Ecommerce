@@ -46,7 +46,7 @@ class Account(AbstractBaseUser):
     last_name=models.CharField(max_length=100)
     email=models.EmailField(max_length=100,unique=True)
     phone_number=models.CharField(max_length=20)
-    address=models.TextField(max_length=500)
+    address=models.TextField(max_length=500,null=True,blank=True)
     country=models.CharField(max_length=20,null=True,blank=True)
     state=models.CharField(max_length=20,null=True,blank=True)
     zip_code=models.CharField(max_length=20,null=True,blank=True)
