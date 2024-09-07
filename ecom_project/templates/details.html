@@ -632,6 +632,7 @@
 <script>
     function get_correct_size(size){
         window.location.href = window.location.pathname + `?size=${size}`;
+        console.log(size)
     }
     document.addEventListener('DOMContentLoaded', (event) => {
         const sizeOptions = document.querySelectorAll('input[name="product-option-sizes"]');

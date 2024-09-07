@@ -6,8 +6,10 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 import datetime
+
+import razorpay
 # Create your views here.
-@login_required(login_url="login")
+# @login_required(login_url="login")
 def home(request):
     categories = Category.objects.all()
     brands = Brand.objects.all()
@@ -17,8 +19,9 @@ def home(request):
     }
     return render(request,'home.html',context)
 
-@login_required(login_url="login")
+# @login_required(login_url="login")
 def category_store(request,category_slug):
+    
 
     category = Category.objects.get(category_slug=category_slug)
     products = Product.objects.filter(category=category, is_available=True)
@@ -28,17 +31,21 @@ def category_store(request,category_slug):
     }
     return render(request,'category_store.html',context)
 
-@login_required(login_url="login")
+# @login_required(login_url="login")
 def store(request):
-    products = Product.objects.all()
-    listed=list(products)
-    products=random.sample(listed,k=9)
+    if request.method =='POST':
+        search = request.POST['text']
+        products = Product.objects.filter(product_name__icontains=search)
+    else:
+        products = Product.objects.all()
+        listed=list(products)
+        products=random.sample(listed,k=9)
     context = {
         "products":products,
     }
     return render(request,'store.html',context)
 
-@login_required(login_url="login")
+# @login_required(login_url="login")
 def product_detail(request,product_slug):
     product = Product.objects.get(product_slug=product_slug)
     product_images = ProductImage.objects.filter(product=product)
@@ -57,12 +64,14 @@ def product_detail(request,product_slug):
 
     if request.GET.get('size'):
         size = request.GET.get('size')
+        
         price = product.get_product_price_by_size(size)
         context['updated_price'] = price
         context['selected_size'] = size
     return render(request,'details.html',context)
 
-@login_required(login_url="login")
+
+# @login_required(login_url="login")
 def brand_store(request,brand_slug):
     brand = Brand.objects.get(brand_slug=brand_slug)
     products = Product.objects.filter(brand=brand, is_available=True)
@@ -87,6 +96,8 @@ def add_to_cart(request,product_id):
     else:
         cart_item.save()
     return redirect("product_detail",product_slug=product.product_slug)
+
+
 
 @login_required(login_url="login")
 def cart(request):
@@ -179,8 +190,9 @@ def checkout(request):
     cart = Cart.objects.filter(user=request.user).first()
     if cart.get_cart_total() > 0:
         grand_total = cart.get_cart_total() + 8.95
+    else:
+        grand_total = cart.get_cart_total()
 
-    grand_total = cart.get_cart_total()
     if request.method == 'POST':
         fname = request.POST.get("fname")
         lname = request.POST.get("lname")
@@ -215,7 +227,7 @@ def checkout(request):
         new_order.order_number=current_date+str(new_order.id)
 
         new_order.save()
-    
+        return redirect("checkout_payment")
     
     context = {
         "cart_items":cart_items,
@@ -226,34 +238,23 @@ def checkout(request):
 
 
 
-# @login_required(login_url="login")
-# def checkout_shipping(request):
-#     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
-#     cart = Cart.objects.filter(user=request.user).first()
-#     if cart.get_cart_total() > 0:
-#         grand_total = cart.get_cart_total() + 8.95
 
-#     grand_total = cart.get_cart_total()
-
-#     context = {
-#         "cart_items":cart_items,
-#         "cart":cart,
-#         "grand_total":round(grand_total,2)
-#     }
-#     return render(request,'checkout_pages/checkout-shipping.html',context)
-
-
+from django.conf import settings
 @login_required(login_url="login")
 def checkout_payment(request):
     cart_items = CartItems.objects.filter(cart__is_paid=False,cart__user = request.user)
     cart = Cart.objects.filter(user=request.user).first()
     if cart.get_cart_total() > 0:
         grand_total = cart.get_cart_total() + 8.95
+    else:
+        grand_total = cart.get_cart_total()
 
-    grand_total = cart.get_cart_total()
+    client = razorpay.Client(auth = (settings.KEY,settings.SECRET))
+    payment = client.order.create({"amount":int(grand_total)*100,"currency":"INR","payment_capture":1})
     context = {
         "cart_items":cart_items,
         "cart":cart,
+        "payment":payment,
         "grand_total":round(grand_total,2)
     }
     return render(request,'checkout_pages/checkout-payment.html',context)

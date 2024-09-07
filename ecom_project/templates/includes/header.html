@@ -29,17 +29,20 @@
                         <span class="nav-link text-body search-trigger cursor-pointer">Search</span>
 
                         <!-- Search navbar overlay-->
-                        <div class="navbar-search d-none">
-                            <div class="input-group mb-3 h-100">
-                                <span class="input-group-text px-4 bg-transparent border-0"><i
-                                        class="ri-search-line ri-lg"></i></span>
-                                <input type="text" class="form-control text-body bg-transparent border-0"
-                                    placeholder="Enter your search terms...">
-                                <span
-                                    class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0"><i
-                                        class="ri-close-circle-line ri-lg"></i></span>
+                        <form method='POST' action="{% url "store" %}">
+                            {% csrf_token %}
+                            <div class="navbar-search d-none">
+                                <div class="input-group mb-3 h-100">
+                                    <span class="input-group-text px-4 bg-transparent border-0"><i
+                                            class="ri-search-line ri-lg"></i></span>
+                                    <input type="text" name="text" class="form-control text-body bg-transparent border-0"
+                                        placeholder="Enter your search terms...">
+                                    <span
+                                        class="input-group-text px-4 cursor-pointer disable-child-pointer close-search bg-transparent border-0"><i
+                                            class="ri-close-circle-line ri-lg"></i></span>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <div class="search-overlay"></div>
                         <!-- / Search navbar overlay-->
 
@@ -60,7 +63,7 @@
                     </li>
                     {% endif %}
                     <!-- /Navbar Login-->
-
+                    
                     <!-- Navbar Cart Icon-->
                     <li class="ms-1 d-inline-block position-relative dropdown-cart">
                         <button class="nav-link me-0 disable-child-pointer border-0 p-0 bg-transparent text-body"
