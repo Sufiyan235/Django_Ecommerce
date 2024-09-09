@@ -73,7 +73,7 @@
                                 </div>
                         </div>
                         <div class="card-body px-0">
-                            <a class="text-decoration-none link-cover" href="{% url "product_detail" product.id %}">{{product.product_name}}</a>
+                            <a class="text-decoration-none link-cover" href="{% url "product_detail" product.product_slug %}">{{product.product_name}}</a>
                             <small class="text-muted d-block">4 colours, 10 sizes</small>
                                     <p class="mt-2 mb-0 small"><s class="text-muted">${{product.product_price}}</s> <span class="text-danger">$198.66</span></p>
                         </div>
